@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: wine_reviewer_production
-  username: wine_reviewer
-  password: <%= ENV["WINE_REVIEWER_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
