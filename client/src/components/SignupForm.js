@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import {Button, Form} from 'react-bootstrap';
 
-function Signup(){
+function SignupForm({ onSignin }){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
-    // const [imageUrl, setImageUrl] = useState("");
-    // const [errors, setErrors] = useState([]);
-    // const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate()
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -17,26 +18,20 @@ function Signup(){
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              username,
-              password,
-              password_confirmation: passwordConfirmation
-            //   image_url: imageUrl
+                username,
+                password,
+                password_confirmation: passwordConfirmation,
+                image_url: ""
             }),
         })
-        // .then((r) => {
-        //     setIsLoading(false);
-        //     if (r.ok) {
-        //       r.json().then((user) => onLogin(user));
-        //     } else {
-        //       r.json().then((err) => setErrors(err.errors));
-        //     }
-        //   });
-        .then(r => {
-           r.json() 
-        })
-        .then(data => {
-            console.log(data)
-        })
+        .then((r) => {
+            setIsLoading(false);
+            if (r.ok) {
+              r.json().then((user) => onSignin(user));
+            } else {
+              r.json().then((err) => setErrors(err.errors));
+            }
+          });
     }
     return (
         <div>
@@ -50,9 +45,6 @@ function Signup(){
                         value={username} 
                         onChange={(e) => setUsername(e.target.value)}
                     />
-                    <Form.Text className="text-muted">
-                    Hehehe.
-                    </Form.Text>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
@@ -64,8 +56,8 @@ function Signup(){
                         autoComplete="current-password"
                     />
                 </Form.Group>
-                <Form.Group>
-                <Form.Label>Verify Password</Form.Label>
+                <Form.Group className="mb-3">
+                    <Form.Label>Verify Password</Form.Label>
                     <Form.Control 
                         type="password" 
                         placeholder="Password" 
@@ -73,10 +65,18 @@ function Signup(){
                         autoComplete="current-password" 
                     />
                 </Form.Group>
-                <Button variant="primary" type="submit">Sign up</Button>
+                <Form.Group className="mb-3">
+                    <Button variant="primary" type="submit">{isLoading ? "Loading..." : "Signup"}</Button>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <p>
+                        Already have an account? 
+                        <Button variant="link" onClick={()=> navigate('/signin')}>Sign in</Button> 
+                    </p>
+                </Form.Group>
             </Form>
         </div>
     )
 }
 
-export default Signup;
+export default SignupForm;
