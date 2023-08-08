@@ -34,8 +34,8 @@ function SigninForm({onSignin}){
         <div>
             <Form onSubmit={handleSubmit}>
                 <h2>Sign in</h2>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Username</Form.Label>
+                <br/>
+                <Form.Group className="mb-3">
                     <Form.Control 
                         type="text" 
                         placeholder="Enter Username" 
@@ -43,12 +43,10 @@ function SigninForm({onSignin}){
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
+                <Form.Group className="mb-3">
                     <Form.Control 
                         type="password" 
-                        placeholder="Password" 
+                        placeholder="Enter Password" 
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}

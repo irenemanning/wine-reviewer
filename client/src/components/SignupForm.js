@@ -37,30 +37,28 @@ function SignupForm({ onSignin }){
         <div>
             <Form onSubmit={handleSubmit}>
                 <h2>Sign Up</h2>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Username</Form.Label>
+                <br/>
+                <Form.Group className="mb-3">
                     <Form.Control 
                         type="text" 
-                        placeholder="Enter Username" 
+                        placeholder="Create Username" 
                         value={username} 
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
+                <Form.Group className="mb-3">
                     <Form.Control 
                         type="password" 
-                        placeholder="Password" 
+                        placeholder="Create Password" 
                         value={password} onChange={(e) => 
                         setPassword(e.target.value)}
                         autoComplete="current-password"
                     />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                    <Form.Label>Verify Password</Form.Label>
                     <Form.Control 
                         type="password" 
-                        placeholder="Password" 
+                        placeholder="Verify Password" 
                         value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)}
                         autoComplete="current-password" 
                     />
