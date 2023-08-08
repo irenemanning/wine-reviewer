@@ -8,6 +8,8 @@ import Home from './Home';
 import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
 // import Logout from './components/Logout';
+import Wines from '../pages/Wines';
+import AddWine from '../pages/AddWine';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -38,6 +40,8 @@ function App() {
           <Route path='/testing' element={<h1>Test Route</h1>}/>
           <Route path="/signin" element={<SigninForm onSignin={setUser}/>} />
           <Route path="/signup" element={<SignupForm onSignin={setUser} />} />
+          <Route path='/wines' element={<Wines/>} />
+          <Route path='/+wine' element={<AddWine/>} />
         </Routes>
       </Router>
     </div>

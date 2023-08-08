@@ -10,7 +10,7 @@ function NavBar(){
               <Navbar.Brand as={Link} to="/">Wine Review</Navbar.Brand>
                 <Nav className="me-auto">
                   <Nav.Link as={Link} to="/wines">Wines</Nav.Link>
-                  <Nav.Link as={Link} to="/addwine">+ Wine</Nav.Link>
+                  <Nav.Link as={Link} to="/+wine">+ Wine</Nav.Link>
                 </Nav>
                 <Nav>
                   <Nav.Link as={Link} to="/signup">Sign Up</Nav.Link>
