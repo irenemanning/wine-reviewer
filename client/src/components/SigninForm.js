@@ -31,7 +31,7 @@ function SigninForm({onSignin}){
         });
     }
     return (
-        <div>
+        <div className="form_div">
             <Form onSubmit={handleSubmit}>
                 <h2>Sign in</h2>
                 <br/>

@@ -11,7 +11,7 @@ class WinesController < ApplicationController
         render json: wine
     end
     def create
-        wine = @current_user.wines.create!(wine_params)
+        wine = Wine.create(wine_params)
         render json: wine, status: :created
     end
     def update

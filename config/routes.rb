@@ -17,3 +17,17 @@ Rails.application.routes.draw do
       to: 'fallback#index',
       constraints: ->(req) { !req.xhr? && req.format.html? }
 end
+
+# {
+#   "wine": {
+#     "image_url": "https://upload.wikimedia.org/wikipedia/en/c/c0/Red_Wine_Glass.jpg", 
+#     "bottle_name": "Merlot Reserve",
+#     "maker": "Vineyard XYZ",
+#     "region": "Napa Valley",
+#     "vintage": 2019,
+#     "profile": "Full-bodied",
+#     "category": "Red",
+#     "variety": "Merlot",
+#     "price": 35
+#   }
+# }

@@ -20,7 +20,9 @@ function AddWine() {
     }
 
     return (
-        <div>
+        <div className="form_div">
+            <h2>Add Wine To Database</h2>
+            <br/>
             <Form onSubmit={handleSubmit}>
                 <Row className="mb-3">
                     <Form.Group as={Col}>
