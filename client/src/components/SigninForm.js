@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {Button, Form} from 'react-bootstrap';
 
 
-function SigninForm({onSignin}){
+function SigninForm({user, onSignin}){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [errors, setErrors] = useState([]);
@@ -24,12 +24,16 @@ function SigninForm({onSignin}){
         .then((r) => {
             setIsLoading(false);
             if (r.ok) {
-              r.json().then((user) => onSignin(user));
+              r.json().then((user) => {
+                    onSignin(user)
+                    navigate("/");
+                });
             } else {
               r.json().then((err) => setErrors(err.errors));
             }
         });
     }
+    console.log(user)
     return (
         <div className="form_div">
             <Form onSubmit={handleSubmit}>

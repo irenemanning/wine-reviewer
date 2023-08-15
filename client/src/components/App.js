@@ -11,11 +11,11 @@ import SigninForm from './SigninForm';
 import Wines from '../pages/Wines';
 import WineCard from '../pages/WineCard';
 import AddWine from '../pages/AddWine';
+import Profile from '../pages/Profile';
 
 function App() {
   const [user, setUser] = useState(null);
   const [wines, setWines] = useState([])
-
   useEffect(() => {
     fetch("/wines")
     .then(r => r.json())
@@ -27,24 +27,29 @@ function App() {
       if (r.ok) {
         r.json().then((user) => {
           setUser(user)
-          console.log(user)
         });
       }
     });
   }, []);
 
+  function handleAddWine(addedWine) {
+    setWines([addedWine, ...wines])
+  }
+console.log("User")
+console.log(user)
   return (
     <div className="App">
       <Router>
-        <NavBar setUser={setUser}/>
+        <NavBar user={user} setUser={setUser}/>
         <Routes>
-        <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile user={user} />} />
           <Route path='/testing' element={<h1>Test Route</h1>}/>
           <Route path="/signin" element={<SigninForm onSignin={setUser}/>} />
-          <Route path="/signup" element={<SignupForm onSignin={setUser} />} />
+          <Route path="/signup" element={<SignupForm user={user} onSignin={setUser} />} />
           <Route path='/wines' element={<Wines wines={wines}/>} />
           <Route path='/wines/:id' element={<WineCard wines={wines} setWines={setWines} user={user} setUser={setUser} />} />
-          <Route path='/+wine' element={<AddWine/>} />
+          <Route path='/+wine' element={<AddWine handleAddWine={handleAddWine} />} />
         </Routes>
       </Router>
     </div>

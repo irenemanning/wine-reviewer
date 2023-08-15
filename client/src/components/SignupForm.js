@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import {Button, Form} from 'react-bootstrap';
+// import Default_Avatar from 'client/public/Default Avatar.png'
 
 function SignupForm({ onSignin }){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
+    const [image_url, setImage_url] = useState("Default_Avatar.png")
     const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
@@ -21,13 +23,14 @@ function SignupForm({ onSignin }){
                 username,
                 password,
                 password_confirmation: passwordConfirmation,
-                image_url: ""
+                image_url: image_url
             }),
         })
         .then((r) => {
             setIsLoading(false);
             if (r.ok) {
               r.json().then((user) => onSignin(user));
+              navigate("/");
             } else {
               r.json().then((err) => setErrors(err.errors));
             }

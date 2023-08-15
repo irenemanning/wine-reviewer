@@ -28,6 +28,14 @@ div.card {
   height: auto;
   border:4px #800022 solid;
   border-radius: 30px;
+  position: relative;
 }
 
-
+.wine_card {
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  max-width: 600px;
+}

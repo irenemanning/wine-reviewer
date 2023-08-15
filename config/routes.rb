@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
-  resources :reviews
+  resources :reviews, only: [:index, :show, :create, :update, :destroy]
   resources :wines, only: [:index, :show, :create, :update, :destroy]
   resources :users
 

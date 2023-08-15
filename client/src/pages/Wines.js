@@ -26,7 +26,7 @@ function Wines({wines}) {
                     <Card.Body>
                         <Card.Title>{wine.maker} - {wine.bottle_name}</Card.Title>
                         <Card.Text>{wine.region}, {wine.vintage}</Card.Text>
-                        <Card.Title>{wine.price}</Card.Title>
+                        <Card.Title>${parseFloat(wine.price).toFixed(2)}</Card.Title>
                     </Card.Body>
                 </Card>
                 </Col>

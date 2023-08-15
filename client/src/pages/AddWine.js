@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import {Button, Form, Col, Row} from 'react-bootstrap';
+import {Button, Form, Col, Row, InputGroup} from 'react-bootstrap';
 
-function AddWine() {
+function AddWine({handleAddWine}) {
     const navigate = useNavigate()
 
     const [bottle_name, setBottleName] = useState("")
@@ -12,11 +12,38 @@ function AddWine() {
     const [profile, setProfile] = useState("")
     const [category, setCategory] = useState("")
     const [variety, setVariety] = useState("")
-    const [price, setPrice] = useState(0)
+    const [price, setPrice] = useState("")
     const [image_url, setImage_url] = useState("")
 
     function handleSubmit(e) {
-        console.log("submit")
+        e.preventDefault()
+        const formattedPrice = parseFloat(price).toFixed(2);
+        fetch("/wines",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ 
+                bottle_name: bottle_name,
+                maker: maker,
+                region: region,
+                vintage: vintage,
+                profile: profile,
+                category: category,
+                variety: variety,
+                image_url: image_url,
+                price: formattedPrice
+             }),
+        }).then((r)=> {
+            if (r.ok) {
+                r.json().then((newWine)=> {
+                    handleAddWine(newWine)
+                    console.log(formattedPrice)
+                    navigate("/wines")
+                })
+            }
+        })
+        // console.log("submit")
     }
 
     return (
@@ -106,12 +133,19 @@ function AddWine() {
                     </Col>
                     <Form.Label column xs={1}>Price</Form.Label>
                     <Col>
-                    <Form.Control 
+                    <InputGroup className="mb-3">
+                    <InputGroup.Text id="inputGroup-sizing-default">
+                    $
+                    </InputGroup.Text>
+                    <Form.Control
+                        aria-label="Default"
+                        aria-describedby="inputGroup-sizing-default"
                         type="text"
                         placeholder="Price" 
                         value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                        onChange={(e) => setPrice(e.target.value) }
                     />
+                    </InputGroup>
                     </Col>
                 </Row>
                 <br/>
