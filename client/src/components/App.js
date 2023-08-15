@@ -43,7 +43,7 @@ console.log(user)
         <NavBar user={user} setUser={setUser}/>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile user={user} />} />
+          <Route path="/profile" element={<Profile user={user} wines={wines} />} />
           <Route path='/testing' element={<h1>Test Route</h1>}/>
           <Route path="/signin" element={<SigninForm onSignin={setUser}/>} />
           <Route path="/signup" element={<SignupForm user={user} onSignin={setUser} />} />

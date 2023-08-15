@@ -13,9 +13,9 @@ function MyWines(user) {
     return (
         <div>
             <h2>My Wines & Reviews</h2>
-            {wines.map((wine) => (
-                
-            ))}
+            {/* {wines.map((wine) => (
+
+            ))} */}
             {/* {reviews.map((review) => (
                 <Card key={review.id} style={{ width: 'auto', display: 'flex', margin: "20px"}}>
                 <Card.Body>
