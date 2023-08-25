@@ -1,31 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
-function MyWines(user) {
-    const [reviews, setReviews] = useState([])
-    const [wines, setWines] = useState([])
+
+
+function MyWines({user, wines, setWines}) {
+    const [userWines, setUserWines] = useState([]);
+
     useEffect(() => {
-        if (user && user.user.reviews && user.user.wines) {
-          setReviews(user.user.reviews);
-          setWines(user.user.wines)
+        if (user && user.reviews && user.wines) {
+          const combined = user.wines.map((wine) => {
+            const matchingReview = user.reviews.find(
+              (review) => review.wine_id === wine.id
+            );
+    
+            return {
+              ...wine,
+              review: matchingReview
+            };
+          });
+          setUserWines(combined);
         }
-    }, [user]);
-    // console.log(wines)
+      }, [user, user.wines, user.reviews]);
+
     return (
         <div>
-            <h2>My Wines & Reviews</h2>
-            {/* {wines.map((wine) => (
-
-            ))} */}
-            {/* {reviews.map((review) => (
-                <Card key={review.id} style={{ width: 'auto', display: 'flex', margin: "20px"}}>
-                <Card.Body>
-                    <Card.Title>{wine.maker} - {wine.bottle_name}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{review.rating} / 5</Card.Subtitle>
-                    <Card.Text>{review.opinion}</Card.Text>
-                    <small className="text-muted">Review by {review.username}</small>
-                </Card.Body>
+            <h2>My Wines</h2>
+            {userWines.map((item) => (
+                <Card key={item.id} style={{ width: "auto", display: "flex", margin: "20px" }}>
+                    <Card.Img 
+                        variant="top" 
+                        height={200}
+                        width={200}
+                        src={item.image_url} />
+                    <Card.Body>
+                        <Card.Title>{item.maker} - {item.bottle_name}, {item.vintage}</Card.Title>
+                        <Card.Text>Region: {item.region}</Card.Text>
+                        <Card.Text>{item.profile}</Card.Text>
+                        <Card.Text>Variety: {item.variety}</Card.Text>
+                        <Card.Text>Category: {item.category}</Card.Text>
+                        <Card.Title>${parseFloat(item.price).toFixed(2)}</Card.Title>
+                    </Card.Body>
                 </Card>
-            ))} */}
+            ))}
         </div>
     )
 }

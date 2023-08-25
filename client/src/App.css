@@ -39,3 +39,8 @@ div.card {
   margin-bottom: 100px;
   max-width: 600px;
 }
+
+.my_review {
+  border: #800022 solid 4px;
+  margin: 20px;
+}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Form, Button, CloseButton} from 'react-bootstrap';
 
 
-function CreateReview({wine, user, setUser, wineId, userId, hideForm}) {
+function CreateReview({wine, user, setUser, wineId, userId, hideForm, handleAddReview}) {
     const [rating, setRating] = useState(0)
     const [opinion, setOpinion] = useState("")
     const [userWines, setUserWines] = useState(user.wines)
@@ -27,11 +27,12 @@ function CreateReview({wine, user, setUser, wineId, userId, hideForm}) {
         })
         .then((r) => {
             if (r.ok) {
-              r.json().then((updatedWine) => {
+              r.json().then((newReview) => {
                 setRating(0);
                 setOpinion("")
                 setErrors([]);
-                setUser({...user, wines: [...userWines, updatedWine]})
+                handleAddReview(newReview)
+                // setUser({...user, wines: [...userWines, updatedWine]})
                 hideForm()
               });
             } else {

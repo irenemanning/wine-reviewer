@@ -4,9 +4,7 @@ import { Card, Col, Row } from "react-bootstrap";
 
 function Wines({wines}) {
     const navigate = useNavigate()
-    // function handleClick(e) {
-    //     console.log(e)
-    // }
+    
     return (
         <div className="wines_container">
             <Row xs={1} md={2} className="g-4">

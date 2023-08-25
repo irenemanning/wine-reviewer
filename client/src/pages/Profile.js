@@ -2,8 +2,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import MyWines from "../components/MyWines";
 
-function Profile({user, wines}) {
-    // console.log(user)
+function Profile({user, wines, setWines}) {
     return (
         <div className="mt-5">
             <Card className="mt-5" style={{ maxWidth: '400px' }}>
@@ -24,7 +23,7 @@ function Profile({user, wines}) {
                 <small className="text-muted">Update Profile Picture</small>
                 </Card.Footer>
             </Card>
-            <MyWines user={user} wines={wines} />
+            <MyWines user={user} wines={wines} setWines={setWines} />
         </div>  
     )
 }

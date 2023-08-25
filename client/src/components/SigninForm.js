@@ -33,7 +33,6 @@ function SigninForm({user, onSignin}){
             }
         });
     }
-    console.log(user)
     return (
         <div className="form_div">
             <Form onSubmit={handleSubmit}>

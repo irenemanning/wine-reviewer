@@ -7,7 +7,6 @@ import NavBar from './NavBar';
 import Home from './Home';
 import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
-// import Logout from './components/Logout';
 import Wines from '../pages/Wines';
 import WineCard from '../pages/WineCard';
 import AddWine from '../pages/AddWine';
@@ -33,22 +32,51 @@ function App() {
   }, []);
 
   function handleAddWine(addedWine) {
-    setWines([addedWine, ...wines])
+    setWines(prevWines => [...prevWines, addedWine]);
   }
-console.log("User")
-console.log(user)
+
+  function handleAddReview(newReview) {
+    setWines(prevWines => {
+      const updatedWines = prevWines.map(wine => {
+        if (wine.id === newReview.wine_id) {
+          return {
+            ...wine,
+            reviews: [...wine.reviews, newReview]
+          };
+        }
+        return wine;
+      });
+      return updatedWines;
+    });
+  }
+
+  function onEditReview(editedReview) {
+    console.log(editedReview)
+  }
+
+  function onDeleteReview(reviewId) {
+    setWines(prevWines => {
+        const updatedWines = prevWines.map(wine => ({
+            ...wine,
+            reviews: wine.reviews.filter(review => review.id !== reviewId)
+        }));
+        return updatedWines;
+    });
+  }
+  console.log(wines)
+
   return (
     <div className="App">
       <Router>
         <NavBar user={user} setUser={setUser}/>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile user={user} wines={wines} />} />
+          <Route path="/profile" element={<Profile user={user} wines={wines} setWines={setWines} />} />
           <Route path='/testing' element={<h1>Test Route</h1>}/>
           <Route path="/signin" element={<SigninForm onSignin={setUser}/>} />
           <Route path="/signup" element={<SignupForm user={user} onSignin={setUser} />} />
           <Route path='/wines' element={<Wines wines={wines}/>} />
-          <Route path='/wines/:id' element={<WineCard wines={wines} setWines={setWines} user={user} setUser={setUser} />} />
+          <Route path='/wines/:id' element={<WineCard wines={wines} setWines={setWines} user={user} setUser={setUser} handleAddReview={handleAddReview} onEditReview={onEditReview} onDeleteReview={onDeleteReview} />} />
           <Route path='/+wine' element={<AddWine handleAddWine={handleAddWine} />} />
         </Routes>
       </Router>
