@@ -1,32 +1,35 @@
 import React, { useState } from "react";
 import { Button, Form, CloseButton } from "react-bootstrap";
 
-function EditReview({ review, setReviews, wine, onEditReview, setToggleEditForm }) {
+function EditReview({ review, wine, handleEditReview, toggleEditForm }) {
     const [updatedReview, setUpdatedReview] = useState({
         rating: review.rating,
-        opinion: review.opinion,
+        review: review.review,
     });
-
-    function handleUpdateReview(e) {
+    const [errors, setErrors] = useState([])
+    async function onEditReview(e) {
         e.preventDefault();
-        fetch(`/reviews/${parseInt(review.id)}`, {
+        const response = await fetch(`/reviews/${parseInt(review.id)}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ review: updatedReview }), // Use the updatedReview state
+            body: JSON.stringify({
+                rating: parseInt(updatedReview.rating), 
+                review: updatedReview.review, 
+                user: {
+                    username: review.username
+                }
+            }), 
         })
-        .then((r) => {
-            if (r.ok) {
-                r.json().then((editedReview) => {
-                    updateReview(editedReview);
-                    setToggleEditForm(false);
-                });
-            }
-        })
-        .catch((error) => {
-            console.error("Error updating review:", error);
-        });
+        const data = await response.json()
+        if (response.ok) {
+            setUpdatedReview(data); 
+            handleEditReview(data);
+            toggleEditForm(); 
+        } else {
+            setErrors(data.errors);
+        }
     }
 
     function handleInputChange(e) {
@@ -37,19 +40,14 @@ function EditReview({ review, setReviews, wine, onEditReview, setToggleEditForm 
         }));
     }
 
-    function updateReview(updatedReview) {
-        onEditReview(updatedReview);
-        setReviews((prevReviews) =>
-            prevReviews.map((prevReview) =>
-                prevReview.id === updatedReview.id ? updatedReview : prevReview
-            )
-        );
-    }
-
     return (
         <div>
-            <Form className="form_div" onSubmit={handleUpdateReview}>
-                {/* ... other form elements ... */}
+            <Form className="form_div" onSubmit={onEditReview}>
+                <Form.Group className="mb-3" style={{ paddingBottom: "20px" }}>
+                    <h4 style={{ float: "left" }}>Edit Review of {wine.maker}-{wine.bottle_name}</h4>
+                    <CloseButton onClick={()=>toggleEditForm()} style={{ float: "right" }} />
+                </Form.Group>
+                <br />
                 <Form.Group className="mb-3">
                     <Form.Label style={{float: "left"}}>Rating</Form.Label>
                     <Form.Control 
@@ -65,11 +63,18 @@ function EditReview({ review, setReviews, wine, onEditReview, setToggleEditForm 
                     <Form.Control 
                     as="textarea" 
                     rows={3} 
-                    name="opinion"
-                    value={updatedReview.opinion}
+                    name="review"
+                    value={updatedReview.review}
                     onChange={handleInputChange}
                     />
                 </Form.Group>
+                {errors.length > 0 && (
+                    <ul style={{color: "red", listStylePosition: "inside"}}>
+                    {errors.map((error) => (
+                        <li key={error}>{error}</li>
+                    ))}
+                    </ul>
+                )}
                 <Button variant="primary" type="submit">Submit</Button> 
             </Form>
         </div>

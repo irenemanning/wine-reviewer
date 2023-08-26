@@ -13,14 +13,14 @@ import AddWine from '../pages/AddWine';
 import Profile from '../pages/Profile';
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({id: null});
   const [wines, setWines] = useState([])
+  console.log(user)
   useEffect(() => {
     fetch("/wines")
     .then(r => r.json())
     .then(wines => setWines(wines))
   }, [])
-  
   useEffect(() => {
     fetch("/me").then((r) => {
       if (r.ok) {
@@ -35,36 +35,6 @@ function App() {
     setWines(prevWines => [...prevWines, addedWine]);
   }
 
-  function handleAddReview(newReview) {
-    setWines(prevWines => {
-      const updatedWines = prevWines.map(wine => {
-        if (wine.id === newReview.wine_id) {
-          return {
-            ...wine,
-            reviews: [...wine.reviews, newReview]
-          };
-        }
-        return wine;
-      });
-      return updatedWines;
-    });
-  }
-
-  function onEditReview(editedReview) {
-    console.log(editedReview)
-  }
-
-  function onDeleteReview(reviewId) {
-    setWines(prevWines => {
-        const updatedWines = prevWines.map(wine => ({
-            ...wine,
-            reviews: wine.reviews.filter(review => review.id !== reviewId)
-        }));
-        return updatedWines;
-    });
-  }
-  console.log(wines)
-
   return (
     <div className="App">
       <Router>
@@ -76,7 +46,7 @@ function App() {
           <Route path="/signin" element={<SigninForm onSignin={setUser}/>} />
           <Route path="/signup" element={<SignupForm user={user} onSignin={setUser} />} />
           <Route path='/wines' element={<Wines wines={wines}/>} />
-          <Route path='/wines/:id' element={<WineCard wines={wines} setWines={setWines} user={user} setUser={setUser} handleAddReview={handleAddReview} onEditReview={onEditReview} onDeleteReview={onDeleteReview} />} />
+          <Route path='/wines/:id' element={<WineCard wines={wines} setWines={setWines} user={user} setUser={setUser} />} />
           <Route path='/+wine' element={<AddWine handleAddWine={handleAddWine} />} />
         </Routes>
       </Router>

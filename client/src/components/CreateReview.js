@@ -1,51 +1,46 @@
 import React, { useState } from "react";
 import {Form, Button, CloseButton} from 'react-bootstrap';
+import { useParams } from "react-router-dom";
 
-
-function CreateReview({wine, user, setUser, wineId, userId, hideForm, handleAddReview}) {
+function CreateReview({wine, user, setToggleReviewForm, handleAddReview}) {
     const [rating, setRating] = useState(0)
-    const [opinion, setOpinion] = useState("")
-    const [userWines, setUserWines] = useState(user.wines)
+    const [review, setReview] = useState("")
     const [errors, setErrors] = useState([]);
+    const { id } = useParams()
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        const ratingInt = parseInt(rating);
-        const reviewData = {
-            user_id: userId,
-            wine_id: wineId,
-            rating: ratingInt,
-            opinion: opinion
-        };
-        console.log(reviewData)
-        fetch("/reviews", {
+        const addedReview = {
+            rating: parseInt(rating), 
+            review: review, 
+            wine_id: id, 
+            user_id: user.id
+        }
+        const response = await fetch("/reviews", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(reviewData),
+            body: JSON.stringify(addedReview),
         })
-        .then((r) => {
-            if (r.ok) {
-              r.json().then((newReview) => {
-                setRating(0);
-                setOpinion("")
-                setErrors([]);
-                handleAddReview(newReview)
-                // setUser({...user, wines: [...userWines, updatedWine]})
-                hideForm()
-              });
+        const data = await response.json()
+        if (response.ok) {
+            setToggleReviewForm(false)
+            handleAddReview(data)
+        } else {
+            if (data.errors && Array.isArray(data.errors)) {
+                setErrors(data.errors);
             } else {
-              r.json().then((err) => setErrors(err.errors));
+                console.log("Invalid error response:", data);
             }
-        });
+        }   
     }
     return (
         <div>
             <Form className="form_div" onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" style={{paddingBottom: "20px"}}>
                     <h4 style={{float: "left"}}>Review of {wine.maker}-{wine.bottle_name}</h4>
-                    <CloseButton onClick={()=>hideForm()} style={{float: "right"}}/>
+                    <CloseButton onClick={()=>setToggleReviewForm(false)} style={{float: "right"}}/>
                 </Form.Group>
                 <br/>
                 <Form.Group className="mb-3">
@@ -61,9 +56,16 @@ function CreateReview({wine, user, setUser, wineId, userId, hideForm, handleAddR
                     <Form.Control 
                     as="textarea" 
                     rows={3} 
-                    onChange={(e) => setOpinion(e.target.value)}
+                    onChange={(e) => setReview(e.target.value)}
                     />
                 </Form.Group>
+                {errors.length > 0 && (
+                    <ul style={{color: "red", listStylePosition: "inside"}}>
+                    {errors.map((error) => (
+                        <li key={error}>{error}</li>
+                    ))}
+                    </ul>
+                )}
                 <Button variant="primary" type="submit">Submit</Button> 
             </Form>
         </div>

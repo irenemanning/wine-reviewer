@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
     end
     def create
         review = @current_user.reviews.create!(review_params)
-        render json: review.wine, status: :created
+        render json: review, status: :created
     end
     def update
         review = @current_user.reviews.find_by(id: params[:id])
@@ -27,12 +27,12 @@ class ReviewsController < ApplicationController
 
     private
     def review_params
-        params.require(:review).permit(:rating, :opinion)
+        params.permit(:user_id, :wine_id, :rating, :review)
     end
     def render_unprocessable_entity_response(invalid)
         render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
     end
     def render_not_found_response
-        render json: { error: "Signup not found" }, status: :not_found
+        render json: { error: "review not found" }, status: :not_found
     end
 end

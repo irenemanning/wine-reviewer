@@ -3,11 +3,22 @@ class UsersController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
+    def index
+        users = User.all
+        render json: users
+    end
+    
     # /signup
     def create
         user = User.create(user_params)
-        session[:user_id] = user.id
-        render json: user, status: :created
+        # session[:user_id] = user.id
+        # render json: user, status: :created
+        if user.valid?
+            session[:user_id] = user.id
+            render json: user, status: :created
+        else
+            render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+        end
     end
 
     #  /me

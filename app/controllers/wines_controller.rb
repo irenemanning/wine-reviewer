@@ -2,7 +2,7 @@ class WinesController < ApplicationController
     skip_before_action :authorize, only: :index
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
-    
+
     def index
         wines = Wine.includes(reviews: :user).all
         render json: wines
@@ -12,8 +12,10 @@ class WinesController < ApplicationController
         render json: { wine: wine.as_json.merge({ price: format('%.2f', wine.price) }) }
     end
     def create
-        wine = Wine.create(wine_params)
+        wine = Wine.create!(wine_params)
         render json: wine, status: :created
+        rescue ActiveRecord::RecordInvalid => e
+        render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
     end
     def update
         wine = find_wine

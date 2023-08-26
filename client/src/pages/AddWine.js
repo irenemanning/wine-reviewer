@@ -4,7 +4,6 @@ import {Button, Form, Col, Row, InputGroup} from 'react-bootstrap';
 
 function AddWine({handleAddWine}) {
     const navigate = useNavigate()
-
     const [bottle_name, setBottleName] = useState("")
     const [maker, setMaker] = useState("")
     const [region, setRegion] = useState("")
@@ -14,11 +13,12 @@ function AddWine({handleAddWine}) {
     const [variety, setVariety] = useState("")
     const [price, setPrice] = useState("")
     const [image_url, setImage_url] = useState("")
+    const [errors, setErrors] = useState([])
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault()
         const formattedPrice = parseFloat(price).toFixed(2);
-        fetch("/wines",{
+        const response = await fetch("/wines",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -34,16 +34,16 @@ function AddWine({handleAddWine}) {
                 image_url: image_url,
                 price: formattedPrice
              }),
-        }).then((r)=> {
-            if (r.ok) {
-                r.json().then((newWine)=> {
-                    handleAddWine(newWine)
-                    console.log(formattedPrice)
-                    navigate("/wines")
-                })
-            }
         })
-        // console.log("submit")
+        const data = await response.json();
+        if (response.ok) {
+            handleAddWine(data)
+            navigate("/wines")
+            console.log("Wine Added To Database:", data);
+        } else {
+            console.log(data.errors)
+            setErrors(data.errors);
+        }
     }
 
     return (
@@ -148,6 +148,14 @@ function AddWine({handleAddWine}) {
                     </InputGroup>
                     </Col>
                 </Row>
+                <br/>
+                {errors.length > 0 && (
+                    <ul style={{color: "red", listStylePosition: "inside"}}>
+                    {errors.map((error) => (
+                        <li key={error}>{error}</li>
+                    ))}
+                    </ul>
+                )}
                 <br/>
                 <Button variant="primary" type="submit">Submit</Button>
             </Form>

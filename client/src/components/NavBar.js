@@ -18,12 +18,20 @@ function NavBar({setUser, user}){
                 </Nav>
                 {user ? (
                   <Nav>
-                    <Image src={user.image_url} roundedCircle 
+                    {user && user.image_url && (
+                      <Image src={user.image_url} roundedCircle 
+                        style={{
+                          maxHeight: "40px", 
+                          marginRight: "10px"
+                        }}
+                      />
+                    )}
+                    {/* <Image src={user.image_url} roundedCircle 
                       style={{
                         maxHeight: "40px", 
                         marginRight: "10px"
                       }}
-                    />
+                    /> */}
                     <Nav.Link as={Link} to="/profile">My Profile</Nav.Link>
                     <Nav.Link as={Link} to="/" onClick={handleLogout}>Logout</Nav.Link>
                   </Nav>

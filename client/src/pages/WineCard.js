@@ -1,54 +1,70 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import {Button} from 'react-bootstrap';
 import CreateReview from "../components/CreateReview";
 import Reviews from "./Reviews";
 
-function WineCard({wines, setWines, user, setUser, handleAddReview, onEditReview, onDeleteReview}) {
+function WineCard({wines, setWines, user, setUser}) {
     const {id} = useParams()
     const [toggleReviewForm, setToggleReviewForm] = useState(false)
-    const [wine, setWine] = useState(null);
-    const findWine = wines.find(w => w.id === parseInt(id))
-    // const [wine, setWine] = useState({
-    //     maker: "",
-    //     bottle_name: "",
-    //     region: "",
-    //     vintage: "",
-    //     variety: "",
-    //     category: "",
-    //     profile: "",
-    //     image_url: "",
-    //     rating: "",
-    //     price: 0
-    // })
-    useEffect(()=> {
-        if (findWine) {
-            setWine(findWine)
-        } else {
-            console.log("nooooo!")
-        }
-    }, [wines, id, findWine])
+    const wine = wines.find(w => w.id === parseInt(id))
 
-    function handleAddReviewAndToggleForm(newReview) {
-            handleAddReview(newReview); 
-            setToggleReviewForm(false);
+    function handleAddReview(newReview) {
+        newReview.username = user.username
+        const updatedWine = {
+          ...wine,
+          reviews: [...wine.reviews, newReview],
+        }
+        const updatedUser = {
+          ...user,
+          wines: [...user.wines, updatedWine],
+        }
+        const updatedWines = wines.map((w) => (w.id === wine.id ? updatedWine : w))
+        setWines(updatedWines);
+        setUser(updatedUser);
+    }
+
+    function handleEditReview(editedReview) {
+        const updatedReviews = wine.reviews.map((review) =>
+            review.id === editedReview.id ? editedReview : review
+        )
+        editedReview.username = wine.reviews.find((r) => r.id === editedReview.id).username;
+
+        const updatedWines = wines.map((w) =>
+            w.id === wine.id ? { ...wine, reviews: updatedReviews } : w
+        );
+        setWines(updatedWines)
     }
 
     function handleDeleteReview(reviewId) {
+        const updatedWine = {
+          ...wine,
+          reviews: wine.reviews.filter((review) => review.id !== reviewId),
+        }
+        const updatedUser = {
+          ...user,
+          wines: user.wines.filter((userWine) => userWine.id !== wine.id),
+        }
+        const updatedWines = wines.map((w) =>
+          w.id === wine.id ? updatedWine : w
+        )
+        setWines(updatedWines)
+        setUser(updatedUser)
+    }
+
+    function onDeleteReview(reviewId) {
         fetch(`/reviews/${reviewId}`, {
             method: "DELETE",
         })
         .then((r) => {
             if (r.ok) {
-                onDeleteReview(reviewId); 
+                handleDeleteReview(reviewId)
             }
         })
         .catch((error) => {
-            console.error("Error deleting review:", error);
+            console.error("Error deleting review:", error)
         });
     }
-
-    console.log(wine)
     
     return (
         <div className="wine_card">
@@ -82,16 +98,14 @@ function WineCard({wines, setWines, user, setUser, handleAddReview, onEditReview
                 <CreateReview 
                     wine={wine} 
                     user={user} 
-                    setUser={setUser} 
-                    wineId={wine.id} userId={user.id} 
-                    hideForm={() => setToggleReviewForm(false)}
-                    handleAddReview={handleAddReviewAndToggleForm}
-                    // hideForm={() => setToggleReviewForm(false)} 
-                    // handleAddReview={handleAddReview} 
+                    setUser={setUser}
+                    setToggleReviewForm={setToggleReviewForm}
+                    handleAddReview={handleAddReview}
                 />
             )}
-            <Reviews wine={wine} setWine={setWine} user={user} handleDeleteReview={handleDeleteReview} onEditReview={onEditReview} />
+            <Reviews wine={wine} user={user} onDeleteReview={onDeleteReview} handleEditReview={handleEditReview} />
         </div>
     )
 }
+
 export default WineCard;

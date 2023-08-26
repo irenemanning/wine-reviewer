@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-  get 'sessions/create'
-  get 'sessions/destroy'
-  resources :reviews, only: [:index, :show, :create, :update, :destroy]
-  resources :wines, only: [:index, :show, :create, :update, :destroy]
-  resources :users
+
+  resources :reviews,except: [:show]
+  resources :wines
+  resources :users, only: [:index, :create, :show]
 
   # get '/hello', to: 'application#hello_world'
 
@@ -12,9 +11,9 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
-
   get '*path',
-      to: 'fallback#index',
-      constraints: ->(req) { !req.xhr? && req.format.html? }
+    to: 'fallback#index',
+    constraints: ->(req) { !req.xhr? && req.format.html? }
+
 end
 
