@@ -14,9 +14,6 @@ function App() {
   const [user, setUser] = useState(null);
   const [wines, setWines] = useState([])
   const [showSignin, setShowSignin] = useState(true)
-  //   const toggleForms = () => {
-  //       setShowSignin(!showSignin)
-  // }
 
   useEffect(() => {
     fetch("/wines")
@@ -55,7 +52,6 @@ function App() {
           ) : (
             <>
             <Route path="/signin" element={<Signin setUser={setUser} showSignin={showSignin} setShowSignin={setShowSignin} />} />
-            {/* <Route path="/" element={<Home />} /> */}
             </>
             
           )}

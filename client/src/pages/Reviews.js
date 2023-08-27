@@ -7,7 +7,7 @@ function Reviews({wine, user, handleEditReview, onDeleteReview}) {
     function toggleEditForm (reviewId) {
         setShowForm((prevEditFormStates) => ({
           ...prevEditFormStates,
-          [reviewId]: !prevEditFormStates[reviewId], // this function toggles the edit form only on my users id
+          [reviewId]: !prevEditFormStates[reviewId]
         }));
       }
 
