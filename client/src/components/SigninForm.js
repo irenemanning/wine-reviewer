@@ -1,37 +1,34 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {Button, Form} from 'react-bootstrap';
 
-
-function SigninForm({user, onSignin}){
+function SigninForm({setUser, setShowSignin}){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-
-    const navigate = useNavigate();
-    
-
-    function handleSubmit(e) {
+    const navigate = useNavigate()
+    async function handleSubmit(e) {
         e.preventDefault()
-        fetch("/login", {
+        const response = await fetch("/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ username, password }),
         })
-        .then((r) => {
-            setIsLoading(false);
-            if (r.ok) {
-              r.json().then((user) => {
-                    onSignin(user)
-                    navigate("/");
-                });
+        const data = await response.json()
+        setIsLoading(false)
+        if (response.ok) {
+            setUser(data)
+            navigate("/")
+        } else {
+            if (data.errors && Array.isArray(data.errors)) {
+                setErrors(data.errors);
             } else {
-              r.json().then((err) => setErrors(err.errors));
+                console.log("Invalid error response:", data);
             }
-        });
+        }
     }
     return (
         <div className="form_div">
@@ -55,6 +52,13 @@ function SigninForm({user, onSignin}){
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Group>
+                {errors.length > 0 && (
+                    <ul style={{color: "red", listStylePosition: "inside"}}>
+                    {errors.map((error) => (
+                        <li key={error}>{error}</li>
+                    ))}
+                    </ul>
+                )}
                 <Form.Group className="mb-3">
                     <Button variant="primary" type="submit">
                     {isLoading ? "Loading..." : "Sign in"}
@@ -63,7 +67,7 @@ function SigninForm({user, onSignin}){
                 <Form.Group className="mb-3">
                     <p>
                         Don't have an account?  
-                        <Button variant="link" onClick={() => navigate('/signup')} >Sign up</Button> 
+                        <Button variant="link" onClick={()=>setShowSignin(false)}>Sign up</Button> 
                     </p>
                 </Form.Group> 
             </Form>

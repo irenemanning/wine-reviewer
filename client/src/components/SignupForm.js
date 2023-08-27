@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {Button, Form} from 'react-bootstrap';
 
-function SignupForm({ onSignin }){
+function SignupForm({ setUser, setShowSignin }){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -10,7 +10,6 @@ function SignupForm({ onSignin }){
     const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
-
     async function handleSubmit(e) {
         e.preventDefault()
         const response = await fetch("/signup", {
@@ -28,10 +27,9 @@ function SignupForm({ onSignin }){
         const data = await response.json()
         setIsLoading(false)
         if (response.ok) {
-            onSignin(data)
+            setUser(data)
             setImage_url("Default_Avatar.png")
             navigate("/")
-            console.log(data)
         } else {
             if (data.errors && Array.isArray(data.errors)) {
                 setErrors(data.errors);
@@ -39,19 +37,6 @@ function SignupForm({ onSignin }){
                 console.log("Invalid error response:", data);
             }
         }
-
-        // .then((r) => {
-        //     setIsLoading(false);
-        //     if (r.ok) {
-        //         r.json().then((user) => {
-        //             onSignin(user)
-        //             setImage_url("Default_Avatar.png")
-        //         });
-        //       navigate("/");
-        //     } else {
-        //       r.json().then((errorData) => setErrors(errorData.errors));
-        //     }
-        //   });
     }
     return (
         <div className="form_div">
@@ -96,7 +81,7 @@ function SignupForm({ onSignin }){
                 <Form.Group className="mb-3">
                     <p>
                         Already have an account? 
-                        <Button variant="link" onClick={()=> navigate('/signin')}>Sign in</Button> 
+                        <Button variant="link" onClick={()=>setShowSignin(true)}>Sign in</Button> 
                     </p>
                 </Form.Group>
             </Form>

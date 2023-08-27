@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   resources :reviews,except: [:show]
   resources :wines
-  resources :users, only: [:index, :create, :show]
+  resources :users, only: [:create, :show]
 
   # get '/hello', to: 'application#hello_world'
 

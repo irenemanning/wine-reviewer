@@ -3,11 +3,15 @@ class UsersController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
-    def index
-        users = User.all
-        render json: users
+    # def index
+    #     users = User.all
+    #     render json: users
+    # end
+     #  /me
+    def show
+        render json: @current_user
     end
-    
+
     # /signup
     def create
         user = User.create(user_params)
@@ -21,11 +25,6 @@ class UsersController < ApplicationController
         end
     end
 
-    #  /me
-    def show
-        render json: @current_user
-    end
-      
     private
 
     def user_params

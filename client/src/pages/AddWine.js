@@ -157,7 +157,7 @@ function AddWine({handleAddWine}) {
                     </ul>
                 )}
                 <br/>
-                <Button variant="primary" type="submit">Submit</Button>
+                <Button type="submit" style={{background: "#800022"}}>Submit</Button>
             </Form>
         </div>
     )

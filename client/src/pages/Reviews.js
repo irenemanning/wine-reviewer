@@ -11,6 +11,10 @@ function Reviews({wine, user, handleEditReview, onDeleteReview}) {
         }));
       }
 
+    if (!wine) {
+        return <div>Loading reviews...</div>
+    }
+    
     return (
         <div>
             {wine.reviews.map((review) => (
@@ -28,7 +32,7 @@ function Reviews({wine, user, handleEditReview, onDeleteReview}) {
                                 size="sm"
                                 variant="secondary"
                                 onClick={() => toggleEditForm(review.id)}
-                                style={{backgroundColor:"#E8E67B"}}
+                                style={{backgroundColor:"#FD95AE"}}
                                 >Edit
                             </Button>
                             <Button

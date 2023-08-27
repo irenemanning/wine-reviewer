@@ -14,8 +14,6 @@ class WinesController < ApplicationController
     def create
         wine = Wine.create!(wine_params)
         render json: wine, status: :created
-        rescue ActiveRecord::RecordInvalid => e
-        render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
     end
     def update
         wine = find_wine
