@@ -66,7 +66,7 @@ function CreateReview({wine, user, setToggleReviewForm, handleAddReview}) {
                     ))}
                     </ul>
                 )}
-                <Button variant="primary" type="submit">Submit</Button> 
+                <Button variant="outline-light" type="submit" style={{background: "#800022"}} >Submit</Button> 
             </Form>
         </div>
     )

@@ -76,12 +76,12 @@ function SignupForm({ setUser, setShowSignin }){
                     </ul>
                 )}
                 <Form.Group className="mb-3">
-                    <Button variant="primary" type="submit">{isLoading ? "Loading..." : "Signup"}</Button>
+                    <Button variant="outline-light" type="submit" style={{background: "#800022"}}>{isLoading ? "Loading..." : "Signup"}</Button>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <p>
                         Already have an account? 
-                        <Button variant="link" onClick={()=>setShowSignin(true)}>Sign in</Button> 
+                        <Button variant="link" onClick={()=>setShowSignin(true)} style={{color: "#800022"}}>Sign in</Button> 
                     </p>
                 </Form.Group>
             </Form>

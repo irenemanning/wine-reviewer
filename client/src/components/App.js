@@ -1,7 +1,6 @@
 import '../App.css';
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './NavBar';
 import Home from '../pages/Home';
 import Signin from './Signin';
@@ -44,7 +43,6 @@ function App() {
           {user? (
             <>
             <Route path="/profile" element={<Profile user={user} wines={wines} setWines={setWines} />} />
-            <Route path='/testing' element={<h1>Test Route</h1>}/>
             <Route path='/wines' element={<Wines wines={wines}/>} />
             <Route path='/wines/:id' element={<WineCard wines={wines} setWines={setWines} user={user} setUser={setUser} />} />
             <Route path='/+wine' element={<AddWine handleAddWine={handleAddWine} />} />

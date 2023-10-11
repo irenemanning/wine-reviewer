@@ -44,3 +44,7 @@ div.card {
   border: #800022 solid 4px;
   margin: 20px;
 }
+
+.link_style {
+  color: #800022 !important;
+}

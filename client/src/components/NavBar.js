@@ -20,11 +20,14 @@ function NavBar({setUser, user, setShowSignin}){
     return (
         <div> 
         <Navbar fixed="top" bg="light" data-bs-theme="light" >
-            <Container>
-              <Navbar.Brand as={Link} to="/">Wine Review</Navbar.Brand>
+          <Container fluid style={{marginLeft: "5px", marginRight: "5px"}}>
+              <img src="winecon.png" alt="Wine Review Logo"
+                style={{height: "60px", width: "60px", marginRight: "20px"}}
+              />
+              <Navbar.Brand as={Link} to="/" >Wine Review</Navbar.Brand>
                 <Nav className="me-auto">
-                  <Nav.Link as={Link} to="/wines">Wines</Nav.Link>
-                  <Nav.Link as={Link} to="/+wine">+ Wine</Nav.Link>
+                  <Nav.Link as={Link} to="/wines" className="link_style">Wines</Nav.Link>
+                  <Nav.Link as={Link} to="/+wine" className="link_style">+ Wine</Nav.Link>
                 </Nav>
                 {user ? (
                   <Nav>
@@ -35,7 +38,7 @@ function NavBar({setUser, user, setShowSignin}){
                         }}
                       />
                     )}
-                    <Nav.Link as={Link} to="/profile">
+                    <Nav.Link as={Link} to="/profile" className="link_style">
                       <Button style={{color: "#800022"}} variant="link">My Profile</Button>
                     </Nav.Link>
                     <Nav.Link as={Link} to="/" >
@@ -45,10 +48,12 @@ function NavBar({setUser, user, setShowSignin}){
                 ) : (
                   <Nav>
                     <Nav.Link as={Link} to="/signin">
-                      <Button onClick={()=>setShowSignin(false)} style={{color: "#800022"}} variant="outline-secondary">Sign Up</Button>
+                      <Button 
+                        onClick={()=>setShowSignin(false)}
+                        style={{color: "#800022", borderBlockColor: "#800022"}} variant="outline-secondary">Sign Up</Button>
                     </Nav.Link>
                     <Nav.Link as={Link} to="/signin">
-                      <Button onClick={()=>setShowSignin(true)} style={{background: "#800022"}}>Sign In</Button>
+                      <Button variant="outline-light" onClick={()=>setShowSignin(true)} style={{background: "#800022"}}>Sign In</Button>
                     </Nav.Link>
                   </Nav>
                 )}

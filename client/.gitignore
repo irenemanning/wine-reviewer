@@ -1,3 +1,26 @@
+You can now view client in the browser.
+
+  Local:            http://localhost:4000
+  On Your Network:  http://172.20.174.203:4000
+
+Note that the development build is not optimized.
+To create a production build, use npm run build.
+
+webpack compiled successfully
+Proxy error: Could not proxy request /wines from localhost:4000 to http://localhost:3000.
+See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+
+Proxy error: Could not proxy request /me from localhost:4000 to http://localhost:3000.
+See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+
+Proxy error: Could not proxy request /wines from localhost:4000 to http://localhost:3000.
+See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+
+Proxy error: Could not proxy request /me from localhost:4000 to http://localhost:3000.
+See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+
+
+
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies

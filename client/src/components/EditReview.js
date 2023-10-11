@@ -16,12 +16,10 @@ function EditReview({ review, wine, handleEditReview, toggleEditForm }) {
             },
             body: JSON.stringify({
                 rating: parseInt(updatedReview.rating), 
-                review: updatedReview.review, 
-                user: {
-                    username: review.username
-                }
+                review: updatedReview.review
             }), 
         })
+
         const data = await response.json()
         if (response.ok) {
             setUpdatedReview(data); 
@@ -32,6 +30,7 @@ function EditReview({ review, wine, handleEditReview, toggleEditForm }) {
         }
     }
 
+    
     function handleInputChange(e) {
         const { name, value } = e.target;
         setUpdatedReview((prevUpdatedReview) => ({
@@ -75,7 +74,7 @@ function EditReview({ review, wine, handleEditReview, toggleEditForm }) {
                     ))}
                     </ul>
                 )}
-                <Button variant="primary" type="submit">Submit</Button> 
+                <Button variant="outline-light" type="submit" style={{background: "#800022"}} >Submit</Button> 
             </Form>
         </div>
     );
