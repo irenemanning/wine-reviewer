@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card } from "react-bootstrap";
 
 
-function MyWines({user, wines, setWines}) {
+function MyWines({user}) {
     const [userWines, setUserWines] = useState([]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (user && user.reviews && user.wines) {
@@ -32,7 +34,7 @@ function MyWines({user, wines, setWines}) {
                         width={200}
                         src={item.image_url} />
                     <Card.Body>
-                        <Card.Title>{item.maker} - {item.bottle_name}, {item.vintage}</Card.Title>
+                        <Card.Title onClick={() => navigate(`/wines/${item.id}`)}>{item.maker} - {item.bottle_name}, {item.vintage}</Card.Title>
                         <Card.Text>Region: {item.region}</Card.Text>
                         <Card.Text>{item.profile}</Card.Text>
                         <Card.Text>Variety: {item.variety}</Card.Text>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Form, Button, CloseButton} from 'react-bootstrap';
 import { useParams } from "react-router-dom";
 
-function CreateReview({wine, user, setToggleReviewForm, handleAddReview}) {
+function CreateReview({wine, setToggleReviewForm, handleAddReview}) {
     const [rating, setRating] = useState(0)
     const [review, setReview] = useState("")
     const [errors, setErrors] = useState([]);

@@ -34,14 +34,14 @@ function App() {
           <Route path="/" element={<Home />} />
           {user? (
             <>
-            <Route path="/profile" element={<Profile user={user} wines={wines} setWines={setWines} />} />
+            <Route path="/profile" element={<Profile user={user} />} />
             <Route path='/wines' element={<Wines wines={wines}/>} />
             <Route path='/wines/:id' element={<WineCard wines={wines} setWines={setWines} user={user} setUser={setUser} />} />
             <Route path='/+wine' element={<AddWine handleAddWine={handleAddWine} />} />
             </>
           ) : (
             <>
-            <Route path="/signin" element={<Signin user={user} showSignin={showSignin} setShowSignin={setShowSignin}  />} />
+            <Route path="/signin" element={<Signin showSignin={showSignin} setShowSignin={setShowSignin}  />} />
             </>
             
           )}

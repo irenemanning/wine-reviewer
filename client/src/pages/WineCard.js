@@ -113,8 +113,6 @@ function WineCard({ wines, setWines, user, setUser }) {
         {toggleReviewForm && (
           <CreateReview
             wine={wine}
-            user={user}
-            setUser={setUser}
             setToggleReviewForm={setToggleReviewForm}
             handleAddReview={updateWinesAndUser}
           />
