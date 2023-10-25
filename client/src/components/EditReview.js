@@ -29,7 +29,6 @@ function EditReview({ review, wine, handleEditReview, toggleEditForm }) {
             setErrors(data.errors);
         }
     }
-
     
     function handleInputChange(e) {
         const { name, value } = e.target;

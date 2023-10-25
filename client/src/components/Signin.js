@@ -2,16 +2,17 @@ import React from "react";
 import SigninForm from "./SigninForm";
 import SignupForm from "./SignupForm";
 
-function Signin({ setUser, showSignin, setShowSignin}) {
+function Signin({ user, showSignin, setShowSignin }) {
+    console.log(setShowSignin)
     return (
         <div>
             {showSignin ? (
                 <>
-                <SigninForm setShowSignin={setShowSignin} setUser={setUser} />
+                <SigninForm setShowSignin={setShowSignin} />
                 </>
             ) : (
                 <>
-                <SignupForm setShowSignin={setShowSignin} setUser={setUser}/>
+                <SignupForm setShowSignin={setShowSignin} />
                 </>
             )
             }

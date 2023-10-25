@@ -13,8 +13,7 @@ function CreateReview({wine, user, setToggleReviewForm, handleAddReview}) {
         const addedReview = {
             rating: parseInt(rating), 
             review: review, 
-            wine_id: id, 
-            user_id: user.id
+            wine_id: id
         }
         const response = await fetch("/reviews", {
             method: "POST",

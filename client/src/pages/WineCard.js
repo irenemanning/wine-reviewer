@@ -28,7 +28,6 @@ function WineCard({ wines, setWines, user, setUser }) {
       const updatedReviews = wine.reviews.map((review) =>
         review.id === editedReview.id ? editedReview : review
       );
-      editedReview.username = wine.reviews.find((r) => r.id === editedReview.id).username;
   
       const updatedWines = wines.map((w) =>
         w.id === wine.id ? { ...wine, reviews: updatedReviews } : w

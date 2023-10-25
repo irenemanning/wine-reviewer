@@ -25,6 +25,23 @@ class WinesController < ApplicationController
         head :no_content
     end
 
+    def find_year_w_reviews
+        
+        year = params[:year].to_i
+        wines = Wine.all.filter {|w| w.vintage == year}
+        reviews = []
+        wines.filter {|w| w.reviews.each{ |r| reviews.push(r) }}
+
+        if wines.length < 1 
+            render json: {message: "No wines with #{year} vintage"}
+        elsif reviews.length < 1
+            render json: {message: "No reviews for #{year} wines yet"}
+        else
+            render json: reviews
+        end
+
+    end
+
     private
 
     def wine_params

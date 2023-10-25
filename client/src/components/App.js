@@ -1,5 +1,5 @@
 import '../App.css';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './NavBar';
@@ -9,27 +9,18 @@ import Wines from '../pages/Wines';
 import WineCard from '../pages/WineCard';
 import AddWine from '../pages/AddWine';
 import Profile from '../pages/Profile';
+import { AuthContext } from '../contexts/AuthContext';
 
 function App() {
-  const [user, setUser] = useState(null);
   const [wines, setWines] = useState([])
   const [showSignin, setShowSignin] = useState(true)
+  const { user, setUser } = useContext(AuthContext);
 
   useEffect(() => {
     fetch("/wines")
     .then(r => r.json())
     .then(wines => setWines(wines))
   }, [])
-
-  useEffect(() => {
-    fetch("/me").then((r) => {
-      if (r.ok) {
-        r.json().then((user) => {
-          setUser(user)
-        });
-      }
-    });
-  }, []);
 
   function handleAddWine(addedWine) {
     setWines(prevWines => [...prevWines, addedWine]);
@@ -50,7 +41,7 @@ function App() {
             </>
           ) : (
             <>
-            <Route path="/signin" element={<Signin setUser={setUser} showSignin={showSignin} setShowSignin={setShowSignin} />} />
+            <Route path="/signin" element={<Signin user={user} showSignin={showSignin} setShowSignin={setShowSignin}  />} />
             </>
             
           )}

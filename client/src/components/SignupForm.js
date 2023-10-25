@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {Button, Form} from 'react-bootstrap';
+import { AuthContext } from "../contexts/AuthContext";
 
-function SignupForm({ setUser, setShowSignin }){
+function SignupForm({ setShowSignin }){
+    const { setUser } = useContext(AuthContext)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -10,6 +12,7 @@ function SignupForm({ setUser, setShowSignin }){
     const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
+
     async function handleSubmit(e) {
         e.preventDefault()
         const response = await fetch("/signup", {
@@ -38,6 +41,7 @@ function SignupForm({ setUser, setShowSignin }){
             }
         }
     }
+    
     return (
         <div className="form_div">
             <Form onSubmit={handleSubmit}>
@@ -81,7 +85,7 @@ function SignupForm({ setUser, setShowSignin }){
                 <Form.Group className="mb-3">
                     <p>
                         Already have an account? 
-                        <Button variant="link" onClick={()=>setShowSignin(true)} style={{color: "#800022"}}>Sign in</Button> 
+                        <Button variant="link" onClick={() => setShowSignin(true)} style={{color: "#800022"}}>Sign in</Button> 
                     </p>
                 </Form.Group>
             </Form>
