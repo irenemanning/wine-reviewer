@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Button, Form, CloseButton } from "react-bootstrap";
+import React, { useState } from "react"
+import { Button, Form, CloseButton } from "react-bootstrap"
 
 function EditReview({ review, wine, handleEditReview, toggleEditForm }) {
     const [updatedReview, setUpdatedReview] = useState({
         rating: review.rating,
         review: review.review,
-    });
+    })
     const [errors, setErrors] = useState([])
     async function onEditReview(e) {
-        e.preventDefault();
+        e.preventDefault()
         const response = await fetch(`/reviews/${parseInt(review.id)}`, {
             method: "PATCH",
             headers: {
@@ -22,20 +22,20 @@ function EditReview({ review, wine, handleEditReview, toggleEditForm }) {
 
         const data = await response.json()
         if (response.ok) {
-            setUpdatedReview(data); 
-            handleEditReview(data);
-            toggleEditForm(); 
+            setUpdatedReview(data) 
+            handleEditReview(data)
+            toggleEditForm() 
         } else {
-            setErrors(data.errors);
+            setErrors(data.errors)
         }
     }
     
     function handleInputChange(e) {
-        const { name, value } = e.target;
+        const { name, value } = e.target
         setUpdatedReview((prevUpdatedReview) => ({
             ...prevUpdatedReview,
             [name]: value,
-        }));
+        }))
     }
 
     return (
@@ -76,7 +76,7 @@ function EditReview({ review, wine, handleEditReview, toggleEditForm }) {
                 <Button variant="outline-light" type="submit" style={{background: "#800022"}} >Submit</Button> 
             </Form>
         </div>
-    );
+    )
 }
 
-export default EditReview;
+export default EditReview

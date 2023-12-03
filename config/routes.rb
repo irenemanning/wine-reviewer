@@ -1,18 +1,17 @@
 Rails.application.routes.draw do
 
-  resources :reviews,except: [:show]
+  resources :reviews, except: [:show]
   resources :wines
-  resources :users, only: [:create, :show]
+  resources :wusers, only: [:create, :show]
 
   # get '/hello', to: 'application#hello_world'
 
-  post "/signup", to: "users#create"
-  get "/me", to: "users#show"
+  post "/signup", to: "wusers#create"
+  get "/me", to: "wusers#show"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
-  
-  get "/vintage/:year", to: "wines#find_year_w_reviews"
 
+  get "/winebefore2000", to: "wines#before2000"
   
   get '*path',
     to: 'fallback#index',

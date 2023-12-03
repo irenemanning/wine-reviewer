@@ -1,6 +1,6 @@
 class Wine < ApplicationRecord
     has_many :reviews
-    has_many :users, through: :reviews
+    has_many :wusers, through: :reviews
 
     validates :image_url, presence: true
     validates :maker, presence: true

@@ -7,21 +7,21 @@ function MyWines({user}) {
     const [userWines, setUserWines] = useState([]);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (user && user.reviews && user.wines) {
-          const combined = user.wines.map((wine) => {
-            const matchingReview = user.reviews.find(
-              (review) => review.wine_id === wine.id
-            );
-    
-            return {
-              ...wine,
-              review: matchingReview
-            };
-          });
-          setUserWines(combined);
+  useEffect(() => {
+    if (user && user.reviews && user.wines) {
+      const combined = user.wines.map((wine) => {
+        const matchingReview = user.reviews.find(
+          (review) => review.wine_id === wine.id
+        )
+
+        return {
+          ...wine,
+          review: matchingReview
         }
-      }, [user, user.wines, user.reviews]);
+      })
+      setUserWines(combined);
+    }
+  }, [user, user.wines, user.reviews])
 
     return (
         <div>

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import {Button} from 'react-bootstrap';
-import CreateReview from "../components/CreateReview";
-import Reviews from "./Reviews";
+import React, { useState } from "react"
+import { useParams } from "react-router-dom"
+import {Button} from 'react-bootstrap'
+import CreateReview from "../components/CreateReview"
+import Reviews from "./Reviews"
 
 function WineCard({ wines, setWines, user, setUser }) {
     const { id } = useParams();

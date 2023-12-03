@@ -8,7 +8,7 @@ function Reviews({wine, user, handleEditReview, onDeleteReview}) {
         setShowForm((prevEditFormStates) => ({
           ...prevEditFormStates,
           [reviewId]: !prevEditFormStates[reviewId]
-        }));
+        }))
       }
 
     if (!wine) {

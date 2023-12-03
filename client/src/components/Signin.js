@@ -3,7 +3,7 @@ import SigninForm from "./SigninForm";
 import SignupForm from "./SignupForm";
 
 function Signin({ showSignin, setShowSignin }) {
-    console.log(setShowSignin)
+    
     return (
         <div>
             {showSignin ? (

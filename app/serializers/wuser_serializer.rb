@@ -1,4 +1,4 @@
-class UserSerializer < ActiveModel::Serializer
+class WuserSerializer < ActiveModel::Serializer
   attributes :id, :username, :image_url
   
   has_many :wines
