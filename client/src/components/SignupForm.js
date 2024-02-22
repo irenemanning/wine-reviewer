@@ -1,16 +1,15 @@
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import {Button, Form} from 'react-bootstrap';
-import { AuthContext } from "../contexts/AuthContext";
+import React, { useState, useContext } from "react"
+import { useNavigate } from "react-router-dom"
+import {Button, Form} from 'react-bootstrap'
+import { AuthContext } from "../contexts/AuthContext"
 
 function SignupForm({ setShowSignin }){
     const { setUser } = useContext(AuthContext)
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordConfirmation, setPasswordConfirmation] = useState("");
-    const [image_url, setImage_url] = useState("")
-    const [errors, setErrors] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const [passwordConfirmation, setPasswordConfirmation] = useState("")
+    const [errors, setErrors] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
 
     async function handleSubmit(e) {
@@ -23,21 +22,19 @@ function SignupForm({ setShowSignin }){
             body: JSON.stringify({
                 username,
                 password,
-                password_confirmation: passwordConfirmation,
-                image_url
+                password_confirmation: passwordConfirmation
             }),
         })
         const data = await response.json()
         setIsLoading(false)
         if (response.ok) {
             setUser(data)
-            setImage_url("Default_Avatar.png")
             navigate("/")
         } else {
             if (data.errors && Array.isArray(data.errors)) {
-                setErrors(data.errors);
+                setErrors(data.errors)
             } else {
-                console.log("Invalid error response:", data);
+                console.log("Invalid error response:", data)
             }
         }
     }
@@ -93,4 +90,4 @@ function SignupForm({ setShowSignin }){
     )
 }
 
-export default SignupForm;
+export default SignupForm
