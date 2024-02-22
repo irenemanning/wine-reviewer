@@ -25,13 +25,6 @@ class WinesController < ApplicationController
         head :no_content
     end
 
-    def before2000
-        filtered_wines = Wine.all.filter do |w| 
-            w.vintage < 2000 && w.vintage != 0
-        end
-        render json: filtered_wines
-    end
-
     private
 
     def wine_params

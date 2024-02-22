@@ -1,30 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { Card, Col, Row } from "react-bootstrap";
 
 function Wines({wines}) {
     const navigate = useNavigate()
-    const [before2000, setBefore2000] = useState([])
-
-    function handleClick2000(){
-        fetch("/winebefore2000")
-        .then((r) => r.json())
-        .then((data)=> {
-            setBefore2000(data)
-            console.log(data)
-        })
-    }
     
     return (
-        <div className="wines_container">
-            <button onClick={handleClick2000}>find wines before 2000</button>
-            
-                {before2000.map((w)=> (
-                    <div>
-                        {w.bottle_name} - {w.vintage}
-                    </div>
-                ))}
-            
+        <div className="wines_container">  
             <Row xs={1} md={2} className="g-4">
             {wines.map((wine) => (
                 <Col 

@@ -10,8 +10,6 @@ Rails.application.routes.draw do
   get "/me", to: "wusers#show"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
-
-  get "/winebefore2000", to: "wines#before2000"
   
   get '*path',
     to: 'fallback#index',
