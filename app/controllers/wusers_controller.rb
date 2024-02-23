@@ -22,6 +22,13 @@ class WusersController < ApplicationController
         end
     end
 
+    # /update
+
+    def update_profile_image
+        @current_user.update(profile_image: params[:user][:profile_image])
+        render json: @current_user  
+    end
+
     private
 
     def user_params

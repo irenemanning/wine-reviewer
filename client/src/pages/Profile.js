@@ -9,10 +9,11 @@ function Profile({user}) {
     function handleFileChange(event) {
         setProfileImage(event.target.files[0])
     }
-    function handleEditProfileImage(e) {
+    function handleUpdateProfileImage(e) {
         e.preventDefault()
         const formData = new FormData()
         formData.append('user[profile_image]', profileImage)
+        fetch("/me/update", { method: "PATCH", body: data })
         // dispatch(updateProfileImage(formData))
     }
     
@@ -55,7 +56,7 @@ function Profile({user}) {
                     <Button className="text-muted" variant="link" onClick={() => {setPopUpForm(true)}}>Update Profile Picture</Button>
                     {PopUpForm === false ? (null) : (
                         <Card className="mt-5">
-                            <Form onSubmit={handleEditProfileImage} encType="multipart/form-data" >
+                            <Form onSubmit={handleUpdateProfileImage} encType="multipart/form-data" >
                                 <Form.Group controlId="formFile" className="mb-3">
                                 <Form.Control type="file" onChange={handleFileChange} />
                                 </Form.Group>
