@@ -1,11 +1,15 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Form, Card, Button, Image } from "react-bootstrap"
 import MyWines from "../components/MyWines"
 
 function Profile({user}) {
-    const [profileImage, setProfileImage] = useState(user.profileImage)
+    const [profileImage, setProfileImage] = useState(null)
     const [PopUpForm, setPopUpForm] = useState(false)
     const [errors, setErrors] = useState([])
+
+    useEffect(() => {
+        setProfileImage(user.profile_image || null)
+    }, [user])
 
     function handleFileChange(event) {
         setProfileImage(event.target.files[0])
