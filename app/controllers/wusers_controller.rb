@@ -2,10 +2,6 @@ class WusersController < ApplicationController
     skip_before_action :authorize, only: :create
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
 
-    # def index
-    #     users = User.all
-    #     render json: users
-    # end
      #  /me
     def show
         render json: @current_user
@@ -24,20 +20,28 @@ class WusersController < ApplicationController
 
     # /update
 
-    def update_profile_image
-        @current_user.update(profile_image: params[:user][:profile_image])
-        render json: @current_user  
+    def update
+        if params[:wuser][:profile_image].present? && params[:wuser][:profile_image].respond_to?(:read)
+            if @current_user.update(profile_image: params[:wuser][:profile_image])
+                render json: @current_user
+            else
+                errors = @current_user.errors.full_messages.join(', ')
+                puts "Error updating profile image: #{errors}"
+                render json: { errors: errors }, status: :unprocessable_entity
+            end
+        else
+            render json: { errors: ["Profile image is missing or invalid"] }, status: :unprocessable_entity
+        end
     end
 
     private
 
-    def user_params
-        params.permit(:username, :password, :password_confirmation, :image_url)
-    end
-
-    # def render_unprocessable_entity_response(invalid)
-    #     render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
+    # def user_params
+    #     params.permit(:username, :password, :password_confirmation, :profile_image)
     # end
+    def user_params
+        params.require(:wuser).permit(:username, :password, :password_confirmation, :profile_image)
+    end
 
     def render_not_found_response
         render json: { error: "Signup not found" }, status: :not_found

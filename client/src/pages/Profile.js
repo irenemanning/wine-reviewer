@@ -1,20 +1,37 @@
-import React, { useState } from "react";
-import { Form, Card, Button } from "react-bootstrap";
-import MyWines from "../components/MyWines";
+import React, { useState } from "react"
+import { Form, Card, Button, Image } from "react-bootstrap"
+import MyWines from "../components/MyWines"
 
 function Profile({user}) {
-    const [profileImage, setProfileImage] = useState(user.profile_image)
+    const [profileImage, setProfileImage] = useState(user.profileImage)
     const [PopUpForm, setPopUpForm] = useState(false)
+    const [errors, setErrors] = useState([])
 
     function handleFileChange(event) {
         setProfileImage(event.target.files[0])
     }
+
     function handleUpdateProfileImage(e) {
         e.preventDefault()
         const formData = new FormData()
-        formData.append('user[profile_image]', profileImage)
-        fetch("/me/update", { method: "PATCH", body: data })
-        // dispatch(updateProfileImage(formData))
+        formData.append('wuser[profile_image]', profileImage) 
+
+        fetch("/me/update", { method: "PATCH", body: formData })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update profile image')
+            }
+            return response.json()
+        })
+        .then(data => {
+            setProfileImage(data.profile_image)
+            setErrors([])
+            setPopUpForm(false)
+        })
+        .catch(error => {
+            setErrors([error.message || 'An error occurred'])
+            console.error('Error updating profile image:', error.message)
+        })
     }
     
     return (
@@ -22,7 +39,8 @@ function Profile({user}) {
             <Card className="mt-5" style={{ maxWidth: '400px' }}>
 
             {user.profile_image === null ? (
-                <Card.Img 
+                <Image 
+                roundedCircle
                 variant="top" 
                 src="/Default_Avatar.png" 
                 style={{
@@ -32,12 +50,13 @@ function Profile({user}) {
                     height: "200px", 
                     width: "200px",
                     aspectRatio: 1
-                }} 
+                }}   
                 />
             ) : (
-                <Card.Img 
+                <Image 
+                roundedCircle
                 variant="top" 
-                src={user.profile_image} 
+                src={profileImage}  
                 style={{
                     position: "flex",
                     margin: "auto",
@@ -45,7 +64,7 @@ function Profile({user}) {
                     height: "200px", 
                     width: "200px",
                     aspectRatio: 1
-                }} 
+                }}   
                 />
             )}
             
@@ -60,11 +79,11 @@ function Profile({user}) {
                                 <Form.Group controlId="formFile" className="mb-3">
                                 <Form.Control type="file" onChange={handleFileChange} />
                                 </Form.Group>
-                                {/* {profileImageErrors.length > 0 && (
+                                {errors.length > 0 && (
                                     <div style={{color: "red", listStylePosition: "inside"}}>
-                                    {profileImageErrors.map((error) => (<li key={error}>{error}</li>))}
+                                    {errors.map((error) => (<li key={error}>{error}</li>))}
                                     </div>
-                                )} */}
+                                )}
                                 <Button variant="dark" type="submit">Upload</Button>
                                 <Button variant="secondary" onClick={()=>setPopUpForm(false)}>Cancel</Button>
                             </Form> 
@@ -79,4 +98,4 @@ function Profile({user}) {
     )
 }
 
-export default Profile;
+export default Profile
