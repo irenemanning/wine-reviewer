@@ -1,11 +1,25 @@
-import React from "react";
-import { Card } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Card, Button } from "react-bootstrap";
 import MyWines from "../components/MyWines";
 
 function Profile({user}) {
+    const [profileImage, setProfileImage] = useState(user.profile_image)
+    const [PopUpForm, setPopUpForm] = useState(false)
+
+    function handleFileChange(event) {
+        setProfileImage(event.target.files[0])
+    }
+    function handleEditProfileImage(e) {
+        e.preventDefault()
+        const formData = new FormData()
+        formData.append('user[profile_image]', profileImage)
+        // dispatch(updateProfileImage(formData))
+    }
+    
     return (
         <div className="mt-5">
             <Card className="mt-5" style={{ maxWidth: '400px' }}>
+
             {user.profile_image === null ? (
                 <Card.Img 
                 variant="top" 
@@ -33,14 +47,33 @@ function Profile({user}) {
                 }} 
                 />
             )}
+            
                 <Card.Body>
                 <Card.Title>Hello, {user.username}</Card.Title>
                 </Card.Body>
                 <Card.Footer>
-                <small className="text-muted">Update Profile Picture</small>
+                    <Button className="text-muted" variant="link" onClick={() => {setPopUpForm(true)}}>Update Profile Picture</Button>
+                    {PopUpForm === false ? (null) : (
+                        <Card className="mt-5">
+                            <Form onSubmit={handleEditProfileImage} encType="multipart/form-data" >
+                                <Form.Group controlId="formFile" className="mb-3">
+                                <Form.Control type="file" onChange={handleFileChange} />
+                                </Form.Group>
+                                {/* {profileImageErrors.length > 0 && (
+                                    <div style={{color: "red", listStylePosition: "inside"}}>
+                                    {profileImageErrors.map((error) => (<li key={error}>{error}</li>))}
+                                    </div>
+                                )} */}
+                                <Button variant="dark" type="submit">Upload</Button>
+                                <Button variant="secondary" onClick={()=>setPopUpForm(false)}>Cancel</Button>
+                            </Form> 
+                        </Card>
+                    )}
                 </Card.Footer>
             </Card>
+            
             <MyWines user={user} />
+
         </div>  
     )
 }
