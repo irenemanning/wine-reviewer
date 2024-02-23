@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   post "/signup", to: "wusers#create"
   get "/me", to: "wusers#show"
-  patch "/update", to: "wusers#update"]
+  patch "/me/update", to: "wusers#update"
 
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get '*path',
     to: 'fallback#index',
     constraints: ->(req) { !req.xhr? && req.format.html? }
-    
+
 end
 
 # Write a custom route that takes a parameter of a year. Find all the wines that have a vintage of that year. Then turn around and find all the reviews of all those wines, sending back a collection of reviews. If there are no reviews yet for the wines, send back a message saying so.
