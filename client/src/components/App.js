@@ -28,7 +28,7 @@ function App() {
         })
         .then(data => {
             setWines(data)
-            setLoading(true)
+            setLoading(false)
         })
         .catch(error => {
             console.error('Error fetching wines:', error)
