@@ -56,7 +56,6 @@ function AddWine({handleAddWine}) {
                     <Form.Label>Wine Maker</Form.Label>
                     <Form.Control 
                         type="text" 
-                        placeholder="Enter Maker or Brand" 
                         value={maker}
                         onChange={(e) => setMaker(e.target.value)} 
                     />
@@ -65,16 +64,14 @@ function AddWine({handleAddWine}) {
                     <Form.Label>Bottle Name</Form.Label>
                     <Form.Control 
                         type="text" 
-                        placeholder="Name of Bottle" 
                         value={bottle_name}
                         onChange={(e) => setBottleName(e.target.value)}
                     />
                     </Form.Group>
                     <Form.Group as={Col}>
-                    <Form.Label>Variety</Form.Label>
+                    <Form.Label>Varietal</Form.Label>
                     <Form.Control 
                         type="text" 
-                        placeholder="Type of wine" 
                         value={variety}
                         onChange={(e) => setVariety(e.target.value)}
                     />
@@ -85,7 +82,6 @@ function AddWine({handleAddWine}) {
                     <Form.Label>Region</Form.Label>
                     <Form.Control 
                         type="text" 
-                        placeholder="Region" 
                         value={region}
                         onChange={(e) => setRegion(e.target.value)}
                     />
@@ -94,13 +90,12 @@ function AddWine({handleAddWine}) {
                     <Form.Label>Vintage</Form.Label>
                     <Form.Control 
                         type="text" 
-                        placeholder="Year" 
                         value={vintage}
                         onChange={(e) => setVintage(e.target.value)}
                     />
                     </Form.Group>
                     <Form.Group as={Col}>
-                    <Form.Label>Category</Form.Label>
+                    <Form.Label>Wine Type</Form.Label>
                     <Form.Control 
                         type="text" 
                         placeholder="red, white, rose ect." 
@@ -114,7 +109,7 @@ function AddWine({handleAddWine}) {
                     <Col>
                     <Form.Control 
                         type="text" 
-                        placeholder="Flavour, notes, body, etc." 
+                        placeholder="Flavour, notes, body, ABV, etc." 
                         value={profile} 
                         onChange={(e) => setProfile(e.target.value)}
                         />
@@ -140,8 +135,7 @@ function AddWine({handleAddWine}) {
                     <Form.Control
                         aria-label="Default"
                         aria-describedby="inputGroup-sizing-default"
-                        type="text"
-                        placeholder="Price" 
+                        type="text" 
                         value={price}
                         onChange={(e) => setPrice(e.target.value) }
                     />
