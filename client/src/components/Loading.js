@@ -1,12 +1,14 @@
 import React from "react"
-import Spinner from 'react-bootstrap/Spinner'
+import {Spinner, Card} from 'react-bootstrap'
 
 function Loading() {
     return (
         <div className="loading">
-            <Spinner animation="border" role="status"></Spinner>  
+            <Card className="loading-card">
+                <h3>Loading...</h3>
+                <Spinner animation="border" role="status"></Spinner>   
+            </Card>
         </div>
-        
     )
 }
 

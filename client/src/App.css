@@ -9,7 +9,20 @@
   color: rgb(0, 0, 0);
 }
 
-
+.loading {
+  background: linear-gradient(180deg, #FFC1D0 16.67%, rgba(255, 205, 215, 0.63) 46.88%, rgba(255, 207, 216, 0.32) 63.54%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.loading-card {
+  width: 60%;
+  margin: 1%;
+  text-align: center;
+  align-items: center;
+  padding: 4%;
+}
 
 .form_div {
   background-color: white;
@@ -20,7 +33,6 @@
 
 .wines_container {
   margin: 8%;
-  
 }
 
 div.card {
