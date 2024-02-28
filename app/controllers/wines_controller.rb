@@ -3,7 +3,7 @@ class WinesController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
 
     def index
-        wines = Wine.includes(reviews: :user).all
+        wines = Wine.includes(reviews: :wuser).all
         render json: wines
     end
     def show

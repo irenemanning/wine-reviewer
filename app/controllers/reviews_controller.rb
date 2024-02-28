@@ -26,7 +26,7 @@ class ReviewsController < ApplicationController
 
     private
     def review_params
-        params.permit(:wine_id, :rating, :review)
+        params.permit(:wine_id, :wuser_id, :rating, :review)
     end
     def render_not_found_response
         render json: { error: "review not found" }, status: :not_found

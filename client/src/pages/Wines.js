@@ -1,6 +1,6 @@
-import React from "react";
-import { useNavigate } from 'react-router-dom';
-import { Card, Col, Row } from "react-bootstrap";
+import React from "react"
+import { useNavigate } from 'react-router-dom'
+import { Card, Col, Row } from "react-bootstrap"
 
 function Wines({wines}) {
     const navigate = useNavigate()
@@ -34,4 +34,4 @@ function Wines({wines}) {
     )
 }
 
-export default Wines;
+export default Wines

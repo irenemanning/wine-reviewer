@@ -1,29 +1,47 @@
-import '../App.css';
-import React, { useState, useEffect, useContext } from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import NavBar from './NavBar';
-import Home from '../pages/Home';
-import Signin from './Signin';
-import Wines from '../pages/Wines';
-import WineCard from '../pages/WineCard';
-import AddWine from '../pages/AddWine';
-import Profile from '../pages/Profile';
-import { AuthContext } from '../contexts/AuthContext';
+import '../App.css'
+import React, { useState, useEffect, useContext } from "react"
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Loading from './Loading'
+import NavBar from './NavBar'
+import Home from '../pages/Home'
+import Signin from './Signin'
+import Wines from '../pages/Wines'
+import WineCard from '../pages/WineCard'
+import AddWine from '../pages/AddWine'
+import Profile from '../pages/Profile'
+import { AuthContext } from '../contexts/AuthContext'
 
 function App() {
   const [wines, setWines] = useState([])
   const [showSignin, setShowSignin] = useState(true)
-  const { user, setUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true)
+  const { user, setUser } = useContext(AuthContext)
 
   useEffect(() => {
     fetch("/wines")
-    .then(r => r.json())
-    .then(wines => setWines(wines))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch wines')
+            }
+            return response.json()
+        })
+        .then(data => {
+            setWines(data)
+            setLoading(true)
+        })
+        .catch(error => {
+            console.error('Error fetching wines:', error)
+            setLoading(false) 
+        })
   }, [])
 
   function handleAddWine(addedWine) {
-    setWines(prevWines => [...prevWines, addedWine]);
+    setWines(prevWines => [...prevWines, addedWine])
+  }
+  
+  if (loading) {
+    return (<Loading />)
   }
 
   return (
@@ -48,7 +66,7 @@ function App() {
         </Routes>
       </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
