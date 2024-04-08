@@ -41,7 +41,7 @@ function App() {
   }
   
   if (loading) {
-    return (<Loading />)
+    return (<div className='loading'><Loading /></div>)
   }
 
   return (

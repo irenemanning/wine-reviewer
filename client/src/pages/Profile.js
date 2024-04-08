@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react"
-import { Form, Card, Button, Image } from "react-bootstrap"
+import { Form, Card, Button, Image, Spinner } from "react-bootstrap"
 import MyWines from "../components/MyWines"
+import Loading from "../components/Loading"
 
 function Profile({user}) {
     const [profileImage, setProfileImage] = useState(null)
     const [PopUpForm, setPopUpForm] = useState(false)
+    const [imgLoading, setImgLoading] = useState(false)
     const [errors, setErrors] = useState([])
 
     useEffect(() => {
@@ -17,6 +19,7 @@ function Profile({user}) {
 
     function handleUpdateProfileImage(e) {
         e.preventDefault()
+        setImgLoading(true)
         const formData = new FormData()
         formData.append('wuser[profile_image]', profileImage) 
 
@@ -36,41 +39,48 @@ function Profile({user}) {
             setErrors([error.message || 'An error occurred'])
             console.error('Error updating profile image:', error.message)
         })
+        .finally(() => {setImgLoading(false)})
     }
     
     return (
         <div className="mt-5">
             <Card className="mt-5" style={{ maxWidth: '400px' }}>
 
-            {user.profile_image === null ? (
-                <Image 
-                roundedCircle
-                variant="top" 
-                src="/Default_Avatar.png" 
-                style={{
-                    position: "flex",
-                    margin: "auto",
-                    padding: "20px",
-                    height: "200px", 
-                    width: "200px",
-                    aspectRatio: 1
-                }}   
-                />
+            {imgLoading ? (
+                <div style={{justifyContent: "center", margin: "auto"}}><Loading /></div>
             ) : (
-                <Image 
+          <>
+            {user.profile_image === null ? (
+              <Image
                 roundedCircle
-                variant="top" 
-                src={profileImage}  
+                variant="top"
+                src="/Default_Avatar.png"
                 style={{
-                    position: "flex",
-                    margin: "auto",
-                    padding: "20px",
-                    height: "200px", 
-                    width: "200px",
-                    aspectRatio: 1
-                }}   
-                />
+                  position: "flex",
+                  margin: "auto",
+                  padding: "20px",
+                  height: "200px",
+                  width: "200px",
+                  aspectRatio: 1,
+                }}
+              />
+            ) : (
+              <Image
+                roundedCircle
+                variant="top"
+                src={profileImage}
+                style={{
+                  position: "flex",
+                  margin: "auto",
+                  padding: "20px",
+                  height: "200px",
+                  width: "200px",
+                  aspectRatio: 1,
+                }}
+              />
             )}
+          </>
+        )}
             
                 <Card.Body>
                 <Card.Title>Hello, {user.username}</Card.Title>
