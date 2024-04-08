@@ -17,13 +17,9 @@ function SignupForm({ setShowSignin }){
         const response = await fetch("/signup", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                username,
-                password,
-                password_confirmation: passwordConfirmation
-            }),
+            body: JSON.stringify({ wuser: {username, password} }),
         })
         const data = await response.json()
         setIsLoading(false)
@@ -47,6 +43,7 @@ function SignupForm({ setShowSignin }){
                 <Form.Group className="mb-3">
                     <Form.Control 
                         type="text" 
+                        name="username"
                         placeholder="Create Username" 
                         value={username} 
                         onChange={(e) => setUsername(e.target.value)}
@@ -55,6 +52,7 @@ function SignupForm({ setShowSignin }){
                 <Form.Group className="mb-3">
                     <Form.Control 
                         type="password" 
+                        name="password"
                         placeholder="Create Password" 
                         value={password} onChange={(e) => 
                         setPassword(e.target.value)}
@@ -64,6 +62,7 @@ function SignupForm({ setShowSignin }){
                 <Form.Group className="mb-3">
                     <Form.Control 
                         type="password" 
+                        name="password_confirmation"
                         placeholder="Verify Password" 
                         value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)}
                         autoComplete="current-password" 

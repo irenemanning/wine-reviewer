@@ -3,12 +3,13 @@ class Wuser < ApplicationRecord
     has_many :reviews
     has_many :wines, through: :reviews
 
-    has_secure_password
-    # validates :password, length: { minimum: 4 }, if: :password_required?
-    validates :username, presence: true, uniqueness: { case_sensitive: false, scope: :id }
+    validates :username, presence: true
     validates_uniqueness_of :username, scope: :id, allow_nil: true, if: :new_record?
 
+    has_secure_password
+
     validate :profile_image_validations, if: :profile_image_required?
+    
 private
 
     def password_required?
@@ -17,6 +18,7 @@ private
         end
         new_record? || changes[:password].present? || changes[:password_confirmation].present?
     end
+ 
     def profile_image_required?
         new_record? || changes[:profile_image].present?
     end

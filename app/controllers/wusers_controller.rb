@@ -14,6 +14,7 @@ class WusersController < ApplicationController
             session[:user_id] = user.id
             render json: user, status: :created
         else
+            puts user_params
             render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
         end
     end
@@ -36,9 +37,6 @@ class WusersController < ApplicationController
 
     private
 
-    # def user_params
-    #     params.permit(:username, :password, :password_confirmation, :profile_image)
-    # end
     def user_params
         params.require(:wuser).permit(:username, :password, :password_confirmation, :profile_image)
     end
