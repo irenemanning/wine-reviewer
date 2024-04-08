@@ -4,7 +4,7 @@ class Wuser < ApplicationRecord
     has_many :wines, through: :reviews
 
     has_secure_password
-    validates :password, length: { minimum: 4 }, if: :password_required?
+    # validates :password, length: { minimum: 4 }, if: :password_required?
     validates :username, presence: true, uniqueness: { case_sensitive: false, scope: :id }
     validates_uniqueness_of :username, scope: :id, allow_nil: true, if: :new_record?
 
