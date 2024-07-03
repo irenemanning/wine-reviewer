@@ -5,8 +5,8 @@ import { AuthContext } from "../contexts/AuthContext";
 
 function SigninForm({setShowSignin}){
     const { user, setUser } = useContext(AuthContext)
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [username, setUsername] = useState("demo")
+    const [password, setPassword] = useState("demo")
     const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate()
